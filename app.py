@@ -36,3 +36,14 @@ def update_event(event_id):
         event.title = data["title"]
 
     return jsonify(event.to_dict())
+
+@app.route("/events/<int:event_id>", methods=["DELETE"])
+def delete_event(event_id):
+    event = find_event(event_id)
+
+    if not event:
+        return jsonify({"error": "Event not found"}), 404
+
+    events.remove(event)
+
+    return "", 204
